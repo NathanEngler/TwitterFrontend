@@ -1,0 +1,79 @@
+<div class="profile-container">
+  <h2>Profile-Settings</h2>
+  <div class="profile-info">
+
+    <div class="profile-image">
+      <img [src]="userProfile.profilePictureUrl" alt="Profile Image" class="profile-picture" id="profile-picture">
+      <button (click)="openImageUpload()" class="edit-button">Change profile picture</button>
+    </div>
+
+    <div class="profile-details">
+      <div class="profile-detail">
+        <span class="detail-label">Firstname:</span>
+        <span class="detail-value">{{ userProfile.firstname }}</span>
+        <button (click)="openEditModal('firstname', userProfile.firstname)" class="edit-button">Edit</button>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">Lastname:</span>
+        <span class="detail-value">{{ userProfile.lastname }}</span>
+        <button (click)="openEditModal('lastname', userProfile.lastname)" class="edit-button">Edit</button>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">Email:</span>
+        <span class="detail-value">{{ userProfile.email }}</span>
+        <button (click)="openEditModal('email', userProfile.email)" class="edit-button">Edit</button>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">Username:</span>
+        <span class="detail-value">{{ userProfile.username }}</span>
+        <button (click)="openEditModal('username', userProfile.username)" class="edit-button">Edit</button>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">Password:</span>
+        <span class="detail-value">********</span>
+        <button (click)="openEditModal('password', '')" class="edit-button">Edit</button>
+      </div>
+    </div>
+  </div>
+  <button (click)="logout()" class="logout-button">Logout</button>
+</div>
+
+<!-- Modal für normale Felder (Username, Email, ...) -->
+<div *ngIf="isEditModalOpen && modalType === 'text'" class="modal-overlay">
+  <div class="modal">
+    <h3>{{ modalTitle }}</h3>
+    <input [(ngModel)]="newValue" [type]="modalInputType" placeholder="Neuer Wert">
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div class="modal-buttons">
+      <button (click)="saveChanges()" class="save-button">Save</button>
+      <button (click)="closeModal()" class="cancel-button">Abort</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal für den Profilbild-Upload -->
+<div *ngIf="isImageUploadOpen" class="modal-overlay">
+  <div class="modal">
+    <h3>Change profile picture</h3>
+    <input type="file" (change)="onFileSelected($event)" accept="image/*">
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div class="modal-buttons">
+      <button (click)="uploadProfilePicture()" class="save-button">Save</button>
+      <button (click)="closeImageUpload()" class="cancel-button">Abort</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal für die Passwort-Änderung -->
+<div *ngIf="isEditModalOpen && modalType === 'password'" class="modal-overlay">
+  <div class="modal">
+    <h3>{{ modalTitle }}</h3>
+    <input [(ngModel)]="oldPassword" type="password" placeholder="Old password">
+    <input [(ngModel)]="newValue" type="password" placeholder="New password">
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div class="modal-buttons">
+      <button (click)="saveChanges()" class="save-button">Save</button>
+      <button (click)="closeModal()" class="cancel-button">Abort</button>
+    </div>
+  </div>
+</div>

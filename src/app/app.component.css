@@ -1,0 +1,10 @@
+header {
+  text-align: center; /* Logo zentrieren */
+  padding: 0px 0; /* Abstand nach oben und unten */
+}
+
+img {
+  max-width: 100%; /* Logo responsiv machen */
+  height: auto;
+  margin-bottom: 0px;
+}

@@ -1,0 +1,202 @@
+/* Allgemeine Stile für das Profil */
+.profile-container {
+  max-width: 500px; /* Größere Breite */
+  margin: 30px auto; /* Zentrieren */
+  padding: 20px;
+  background-color: #15202b; /* Dunkler Hintergrund */
+  color: #ffffff; /* Weiße Schrift */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.profile-info {
+  margin-bottom: 20px;
+}
+
+.profile-info p {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.profile-image {
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.profile-picture {
+  width: 150px; /* Größeres Profilbild */
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid #1da1f2; /* Blauer Rahmen */
+  object-fit: cover; /* Stellt sicher, dass das Bild korrekt skaliert wird */
+}
+
+.profile-details {
+  margin-top: 20px;
+}
+
+.profile-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #1c2733; /* Dunklerer Hintergrund für Details */
+  border-radius: 8px;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: #1da1f2; /* Blaue Schrift für Labels */
+}
+
+.detail-value {
+  color: #ffffff; /* Weiße Schrift für Werte */
+}
+
+.logout-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1da1f2; /* Blauer Button */
+  border: none;
+  border-radius: 6px;
+  color: #ffffff; /* Weiße Schrift */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #1991db; /* Dunklerer Blauton beim Hover */
+}
+
+/* Modal-Stile */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Dunkler Hintergrund */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #15202b; /* Dunkler Hintergrund */
+  padding: 25px; /* Weniger Innenabstand */
+  border-radius: 12px; /* Etwas weniger abgerundete Ecken */
+  width: 450px; /* Kleinere Breite */
+  max-width: 90%; /* Maximale Breite auf kleinen Bildschirmen */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Leichterer Schatten */
+  color: #ffffff; /* Weiße Schrift */
+  position: relative; /* Für die Positionierung des Close-Buttons */
+  border: 1px solid #1c2733; /* Dunkler Rahmen */
+}
+
+.modal h3 {
+  margin-bottom: 20px; /* Weniger Abstand unter dem Titel */
+  font-size: 22px; /* Kleinere Schriftgröße */
+  color: #1da1f2; /* Blauer Titel */
+  text-align: center; /* Titel zentrieren */
+  font-weight: 600; /* Etwas dickere Schrift */
+}
+
+.modal input {
+  width: 100%;
+  padding: 10px; /* Kleinere Eingabefelder */
+  margin-bottom: 15px; /* Weniger Abstand zwischen den Eingabefeldern */
+  border: 1px solid #1c2733; /* Dunkler Rahmen */
+  border-radius: 6px; /* Etwas weniger abgerundete Ecken */
+  background-color: #1c2733; /* Dunkler Hintergrund */
+  color: #ffffff; /* Weiße Schrift */
+  font-size: 14px; /* Kleinere Schriftgröße */
+  transition: border-color 0.3s ease; /* Sanfte Animation für den Rahmen */
+}
+
+.modal input:focus {
+  border-color: #1da1f2; /* Blauer Rahmen beim Fokussieren */
+  outline: none; /* Entfernt den Standard-Fokus-Rahmen */
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end; /* Buttons rechts ausrichten */
+  gap: 10px; /* Weniger Abstand zwischen den Buttons */
+  margin-top: 15px; /* Weniger Abstand nach oben */
+}
+
+.modal-buttons button {
+  padding: 10px 20px; /* Kleinere Buttons */
+  border: none;
+  border-radius: 6px; /* Etwas weniger abgerundete Ecken */
+  cursor: pointer;
+  font-size: 14px; /* Kleinere Schriftgröße */
+  font-weight: 500; /* Etwas dickere Schrift */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Sanfte Hover-Animation */
+}
+
+.modal-buttons button:hover {
+  transform: scale(1.05); /* Leichte Vergrößerung beim Hover */
+}
+
+/* Speichern-Button */
+.save-button {
+  background-color: #1da1f2; /* Blauer Button */
+  color: #ffffff; /* Weiße Schrift */
+}
+
+.save-button:hover {
+  background-color: #1991db; /* Dunklerer Blauton beim Hover */
+}
+
+/* Abbrechen-Button */
+.cancel-button {
+  background-color: #1c2733; /* Dunkler Button */
+  color: #ffffff; /* Weiße Schrift */
+  border: 1px solid #2a3a4a; /* Hellerer Rahmen */
+}
+
+.cancel-button:hover {
+  background-color: #2a3a4a; /* Hellerer Hintergrund beim Hover */
+}
+
+/* Fehlermeldungen */
+.error-message {
+  color: #ff6b6b; /* Rote Schrift */
+  margin-bottom: 15px; /* Weniger Abstand nach unten */
+  font-size: 13px; /* Kleinere Schriftgröße */
+  text-align: center; /* Fehlermeldungen zentrieren */
+}
+
+/* Stile für die Bearbeiten-Buttons */
+.edit-button {
+  background-color: #1da1f2;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px; /* Kleinere Buttons */
+  border-radius: 6px; /* Etwas weniger abgerundete Ecken */
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 13px; /* Kleinere Schriftgröße */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-button:hover {
+  background-color: #1991db;
+  transform: scale(1.05); /* Leichte Vergrößerung beim Hover */
+}
+
+/* Stile für den Profilbild-Ändern-Button */
+.profile-image .edit-button {
+  margin-top: 10px; /* Weniger Abstand nach oben */
+  width: 100%;
+  max-width: 180px; /* Kleinere maximale Breite */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
