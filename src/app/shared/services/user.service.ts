@@ -26,4 +26,20 @@ export class UserService {
     });
     return this.http.get<any>(url, { headers });
   }
+  // Methode zum Löschen des Benutzerkontos
+  deleteUser(userId: string): Observable<any> {
+    const token = this.authService.getToken(); // Hole das Token aus dem AuthService
+    if (!token) {
+      throw new Error('Token not found');
+    }
+
+    // Setze die Header mit dem Token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    // API-Aufruf zum Löschen des Kontos
+    const url = `http://localhost:8080/api/user/delete/${userId}`; // Dynamische URL
+    return this.http.delete(url, { headers });
+  }
 }

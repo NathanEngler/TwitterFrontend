@@ -36,17 +36,18 @@
     </div>
   </div>
   <button (click)="logout()" class="logout-button">Logout</button>
+  <button (click)="openDeleteModal()" class="delete-account-button">Delete Account</button>
 </div>
 
 <!-- Modal für normale Felder (Username, Email, ...) -->
 <div *ngIf="isEditModalOpen && modalType === 'text'" class="modal-overlay">
   <div class="modal">
     <h3>{{ modalTitle }}</h3>
-    <input [(ngModel)]="newValue" [type]="modalInputType" placeholder="Neuer Wert">
+    <input [(ngModel)]="newValue" [type]="modalInputType" placeholder="New value">
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <div class="modal-buttons">
       <button (click)="saveChanges()" class="save-button">Save</button>
-      <button (click)="closeModal()" class="cancel-button">Abort</button>
+      <button (click)="closeModal()" class="cancel-button">Cancel</button>
     </div>
   </div>
 </div>
@@ -59,7 +60,7 @@
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <div class="modal-buttons">
       <button (click)="uploadProfilePicture()" class="save-button">Save</button>
-      <button (click)="closeImageUpload()" class="cancel-button">Abort</button>
+      <button (click)="closeImageUpload()" class="cancel-button">Cancel</button>
     </div>
   </div>
 </div>
@@ -67,13 +68,26 @@
 <!-- Modal für die Passwort-Änderung -->
 <div *ngIf="isEditModalOpen && modalType === 'password'" class="modal-overlay">
   <div class="modal">
-    <h3>{{ modalTitle }}</h3>
+    <h3> Change password </h3>
     <input [(ngModel)]="oldPassword" type="password" placeholder="Old password">
     <input [(ngModel)]="newValue" type="password" placeholder="New password">
+    <input [(ngModel)]="confirmedPassword" type="password" placeholder="Confirm password">
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <div class="modal-buttons">
       <button (click)="saveChanges()" class="save-button">Save</button>
       <button (click)="closeModal()" class="cancel-button">Abort</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal für die Kontolöschung -->
+<div *ngIf="isDeleteModalOpen" class="modal-overlay">
+  <div class="modal">
+    <h3>Delete account</h3>
+    <p>Do you really want to leave the Project Y :( ?</p>
+    <div class="modal-buttons">
+      <button (click)="deleteAccount()" class="delete-button">Yes, delete</button>
+      <button (click)="closeDeleteModal()" class="cancel-button">No, cancel</button>
     </div>
   </div>
 </div>

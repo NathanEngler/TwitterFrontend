@@ -198,5 +198,18 @@
   margin-left: auto;
   margin-right: auto;
 }
+.delete-account-button {
+  background-color: #ff4d4d; /* Rote Farbe für Warnung */
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.delete-account-button:hover {
+  background-color: #e60000; /* Dunkleres Rot beim Hover */
+}
 
 

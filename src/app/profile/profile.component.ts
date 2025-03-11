@@ -5,7 +5,6 @@ import { UserService } from '../shared/services/user.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
@@ -19,10 +18,12 @@ export class ProfileComponent implements OnInit {
   userProfile: any = {};
   isEditModalOpen: boolean = false;
   isImageUploadOpen: boolean = false;
+  isDeleteModalOpen: boolean = false;
   modalTitle: string = '';
   modalInputType: string = 'text';
   newValue: string = '';
   oldPassword: string = '';
+  confirmedPassword: string = '';
   currentEditingField: string | null = null;
   errorMessage: string = '';
   selectedFile: File | null = null;
@@ -61,9 +62,10 @@ export class ProfileComponent implements OnInit {
   openEditModal(field: string, currentValue: string): void {
     if (field) {
       this.currentEditingField = field;
-      this.modalTitle = `${field} bearbeiten`;
+      this.modalTitle = `Edit ${field} `;
       this.newValue = currentValue;
       this.oldPassword = ''; // Setze das alte Passwort zurück
+      this.confirmedPassword = '';
 
       // Setze den Modal-Typ basierend auf dem Feld
       this.modalType = field === 'password' ? 'password' : 'text';
@@ -80,6 +82,19 @@ export class ProfileComponent implements OnInit {
   //Methode um die Änderungen auch wirklich zu übernehmen
   saveChanges(): void {
     if (this.currentEditingField && this.newValue) {
+      // Überprüfe, ob es sich um eine Passwort-Änderung handelt
+      if (this.currentEditingField === 'password') {
+        // Überprüfungen
+        if (this.newValue.length < 8) {
+          this.errorMessage = 'Your password has to have atleast 8 digits';
+          return;
+        }
+        if (this.newValue !== this.confirmedPassword) {
+          this.errorMessage = 'Please make sure that your new password is the same as the confirmed one';
+          return;
+        }
+      }
+
       const userId = this.userProfile.id;
       if (!userId) {
         console.error('User ID is undefined');
@@ -87,9 +102,10 @@ export class ProfileComponent implements OnInit {
         return;
       }
 
-      //sichergehen, dass die richtige URL angesprochen wird
+      // Sichergehen, dass die richtige URL angesprochen wird
       const baseUrl = 'http://localhost:8080/api';
       const endpoint = `${baseUrl}/user/${userId}/new${this.currentEditingField}`;
+
       const payload = this.currentEditingField === 'password'
         ? { oldPassword: this.oldPassword, newPassword: this.newValue }
         : { [this.currentEditingField]: this.newValue };
@@ -100,7 +116,6 @@ export class ProfileComponent implements OnInit {
 
       this.http.put(endpoint, payload, { headers }).subscribe({
         next: (response) => {
-          //console.log('Response:', response); // Debugging
           // Überprüfe, ob currentEditingField nicht null ist
           if (this.currentEditingField) {
             // Aktualisiere die lokalen Daten
@@ -188,6 +203,49 @@ export class ProfileComponent implements OnInit {
     this.isImageUploadOpen = false;
     this.selectedFile = null;
     this.errorMessage = '';
+  }
+
+  // Methode zum Öffnen des Lösch-Modals
+  openDeleteModal() {
+    this.isDeleteModalOpen = true;
+  }
+
+  // Methode zum Schließen des Lösch-Modals
+  closeDeleteModal() {
+    this.isDeleteModalOpen = false;
+  }
+
+  // Methode zum Löschen des Kontos
+  deleteAccount() {
+    const userId = this.authService.getUserId();
+    if (!userId) {
+      alert('User ID not found. Please log in again.');
+      return;
+    }
+
+    this.userService.deleteUser(userId).subscribe({
+      next: (response) => {
+        console.log('Response from backend:', response); // Debugging: Zeige die Antwort an
+
+        // Überprüfe, ob die Löschung erfolgreich war
+        if (response && response.status === '200') {
+          this.authService.logout();
+          this.router.navigate(['/register']);
+        } else {
+          alert('Unexpected response: ' + JSON.stringify(response));
+        }
+      },
+      error: (err) => {
+        console.error('Error deleting account:', err);
+        if (err.status === 401) {
+          alert('Unauthorized: Please log in again.');
+        } else if (err.error) {
+          alert('Error: ' + err.error);
+        } else {
+          alert('An error occurred while deleting your account. Please try again.');
+        }
+      }
+    });
   }
 
   logout(): void {
