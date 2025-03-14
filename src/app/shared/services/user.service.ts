@@ -16,7 +16,7 @@ export class UserService {
   ) {}
 
   getUserProfile(): Observable<any> {
-    const userId = this.authService.getUserId(); // Hole die Benutzer-ID
+    const userId = this.authService.getUserId();
     if (!userId) {
       throw new Error('User ID not found');
     }

@@ -21,7 +21,7 @@ export class RegisterComponent {
     confirmPassword: ''
   };
 
-  errorMessage: string = ''; // Für Fehlermeldungen
+  errorMessage: string = '';
 
   constructor(
     private http: HttpClient,

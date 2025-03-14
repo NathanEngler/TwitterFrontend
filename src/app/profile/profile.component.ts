@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
 
 ) {}
 
-
+//User:prfoil immer anzeigen bei Weiterleitung auf Profilkomponente
   ngOnInit(): void {
     this.loadUserProfile();
   }
@@ -75,8 +75,8 @@ export class ProfileComponent implements OnInit {
 
       this.isEditModalOpen = true;
     } else {
-      console.error('Field is undefined');
-      this.errorMessage = 'Fehler: Feld nicht gefunden.';
+      //console.error('Field is undefined');
+      this.errorMessage = 'Field not found.';
     }
   }
   //Methode um die Änderungen auch wirklich zu übernehmen
@@ -94,21 +94,32 @@ export class ProfileComponent implements OnInit {
           return;
         }
       }
+      if (this.currentEditingField === 'email') {
+        // Überprüfe, ob die E-Mail-Adresse ein gültiges Format hat
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(this.newValue)) {
+          this.errorMessage = 'Error: Please enter a valid Email (e.g. example@domain.com).';
+          return;
+        }
+      }
 
       const userId = this.userProfile.id;
       if (!userId) {
         console.error('User ID is undefined');
-        this.errorMessage = 'Fehler: Benutzer-ID nicht gefunden.';
+        this.errorMessage = 'Error User-Id not found.';
         return;
       }
 
       // Sichergehen, dass die richtige URL angesprochen wird
       const baseUrl = 'http://localhost:8080/api';
-      const endpoint = `${baseUrl}/user/${userId}/new${this.currentEditingField}`;
+      //const endpoint = `${baseUrl}/user/${userId}/new${this.currentEditingField}`;
+      const endpoint = `${baseUrl}/user/${userId}/update`;
 
-      const payload = this.currentEditingField === 'password'
-        ? { oldPassword: this.oldPassword, newPassword: this.newValue }
-        : { [this.currentEditingField]: this.newValue };
+      const payload = {
+        field: this.currentEditingField,
+        value: this.newValue,
+        oldPassword: this.oldPassword
+      };
 
       const token = this.authService.getToken();
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
@@ -121,12 +132,12 @@ export class ProfileComponent implements OnInit {
             // Aktualisiere die lokalen Daten
             this.userProfile[this.currentEditingField] = this.newValue;
           }
-          this.showSuccessMessage(`${this.currentEditingField} erfolgreich geändert!`);
+          this.showSuccessMessage(`${this.currentEditingField} changed successfully!`);
           this.closeModal();
         },
         error: (err) => {
           console.error('Error updating field:', err);
-          this.errorMessage = 'Fehler beim Speichern: ' + (err.error?.message || err.message);
+          this.errorMessage = 'Error: ' + (err.error?.message || err.message);
         }
       });
     }
@@ -151,7 +162,7 @@ export class ProfileComponent implements OnInit {
       const userId = this.userProfile.id;
       if (!userId) {
         console.error('User ID is undefined');
-        this.errorMessage = 'Fehler: Benutzer-ID nicht gefunden.';
+        this.errorMessage = 'Error: User-ID not found.';
         return;
       }
       const baseUrl = 'http://localhost:8080/api';
@@ -191,11 +202,11 @@ export class ProfileComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error uploading profile picture:', err);
-          this.errorMessage = 'Fehler beim Hochladen: ' + (err.error?.message || err.message);
+          this.errorMessage = 'Error while uploading: ' + (err.error?.message || err.message);
         }
       });
     } else {
-      this.errorMessage = 'Bitte wähle ein Bild aus.';
+      this.errorMessage = 'Please select a picture.';
     }
   }
 

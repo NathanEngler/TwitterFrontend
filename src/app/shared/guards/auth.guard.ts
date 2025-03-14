@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-
+// Zur Verhinderung von Zugriffen von unautorisierten Usern auf bestimmte Pfade
 @Injectable({
   providedIn: 'root'
 })

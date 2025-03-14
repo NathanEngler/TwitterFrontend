@@ -12,7 +12,4 @@ export const appConfig = {
     provideRouter(routes), // Routing
     importProvidersFrom(FormsModule)]
 };
-/*export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
-};
-*/
+
